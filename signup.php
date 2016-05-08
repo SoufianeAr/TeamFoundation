@@ -4,34 +4,24 @@
 <html lang="en">
 <!--<![endif]-->
 <head>
-
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-
-
     <link rel="stylesheet" href="assets/iconfont/material-icons.css" />
     <link rel="stylesheet" href="assets/w3/w3.css" />
     <link rel="stylesheet" href="assets/css/materialize.min.css" />
     <link rel="stylesheet" href="assets/css/style.css" />
-
-
     <link rel="icon" type="image/png" href="assets/img/logo-16x16.png" sizes="16x16" />
     <link rel="icon" type="image/png" href="assets/img/logo-32x32.png" sizes="32x32" />
-
     <title>TeamFoundation</title>
-
 </head>
 <body style='background-color:#ECECEC; overflow-x:hidden;'>
-
-
 <div class="row" >
-
   <div class="col s12 m12 l12" >
   	 <div id="login" class="white card-panel hoverable">
 
       	<div class="center-align">
-            <img id="blah" class="responsive-img circle" src="#" alt="Profile picture" width="128" height="128" hidden="yes" />
+            <img id="blah" class="responsive-img circle" src="uploads/media/user_default.png" alt="Profile picture" width="128" height="128" />
       	</div>
 
       <form action="signup_submit" method="post" accept-charset="utf-8">

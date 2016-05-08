@@ -21,7 +21,7 @@
     <title>TeamFoundation</title>
 
 </head>
-<body style='background-color:#ECECEC; overflow-x:hidden;'>
+<body id="body_disconnect" style='background-color:#ECECEC; overflow-x:hidden;'>
 
 
 
@@ -29,24 +29,47 @@
 
 
 
-<div class="preloader-wrapper big active" style="left:50%;margin-top:250px;">
-    <div class="spinner-layer spinner-blue-only">
-      <div class="circle-clipper left">
-        <div class="circle"></div>
-      </div><div class="gap-patch">
-        <div class="circle"></div>
-      </div><div class="circle-clipper right">
-        <div class="circle"></div>
-      </div>
+
+
+<br/><br/><br/><br/><br/><br/><br/><br/>
+
+<div class="row">
+  <div class="col s12 m4 l4 center">
+    <div class="preloader-wrapper big active" >
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
+    </div>
+  </div>
+    
+  <div class="col s12 m4 l4 center ">
+      Loging out...
+  </div>
+    
+  <div class="col s12 m4 l4 center">
+    <div class="preloader-wrapper big active" >
+        <div class="spinner-layer spinner-blue-only">
+          <div class="circle-clipper left">
+            <div class="circle"></div>
+          </div>
+          <div class="gap-patch">
+            <div class="circle"></div>
+          </div>
+          <div class="circle-clipper right">
+            <div class="circle"></div>
+          </div>
+        </div>
     </div>
 
   </div>
-
-
-
-
-<div  style="margin-top:10px;margin-left:44%">
-  <h3>Loging Out...</h3>
 </div>
 
 

@@ -1,33 +1,202 @@
 /********************************************************************************************************/
-/********************************************** OUTBOUNDED **********************************************/
+/********************************************** OUT BOUNDED **********************************************/
 /********************************************************************************************************/
-/*#test {
+
+/*
+#test {
   font-family: 'Tangerine', serif;
   font-size: 48px;
   text-shadow: 4px 4px 4px #aaa;
-}*/
+}
+*/
 
+pre .str,code .str
+{
+    color:#65b042
+}
+pre .kwd,code .kwd{color:#e28964}
+pre .com,code .com{color:#aeaeae;font-style:italic}
+pre .typ,code .typ{color:#89bdff}
+pre .lit,code .lit{color:#3387cc}
+pre .pun,code .pun{color:#fff}
+pre .pln,code .pln{color:#fff}
+pre .tag,code .tag{color:#89bdff}
+pre .atn,code .atn{color:#bdb76b}
+pre .atv,code .atv{color:#65b042}
+pre .dec,code .dec{color:#3387cc}
+
+pre.prettyprint,code.prettyprint{
+    background-color:#000;
+    -moz-border-radius:8px;
+    -webkit-border-radius:8px;
+    -o-border-radius:8px;
+    -ms-border-radius:8px;
+    -khtml-border-radius:8px;
+    border-radius:8px
+}
+
+pre.prettyprint{
+    width:100%;
+    margin:1em auto;
+    padding:1em;
+
+}
+
+ol.linenums{
+    margin-top:0;
+    margin-bottom:0;
+    color:#aeaeae
+}
+
+li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}
+
+@media print{
+    pre .str,code .str{color:#060}
+    pre .kwd,code .kwd{color:#006;font-weight:bold}
+    pre .com,code .com{color:#600;font-style:italic}
+    pre .typ,code .typ{color:#404;font-weight:bold}
+    pre .lit,code .lit{color:#044}pre .pun,code .pun{color:#440}
+    pre .pln,code .pln{color:#000}pre .tag,code .tag{color:#006;font-weight:bold}
+    pre .atn,code .atn{color:#404}pre .atv,code .atv{color:#060}
+}
+
+
+
+@import url(http://weloveiconfonts.com/api/?family=typicons);
+[class*="typicons-"]:before {
+  font-family: 'Typicons', sans-serif;
+}
+
+.module {
+  width: 300px;
+  margin: 20px auto;
+}
+
+.top-bar {
+  background: #666;
+  color: white;
+  padding: 0.5rem;
+  position: relative;
+  overflow: hidden;
+}
+.top-bar h1 {
+  display: inline;
+  font-size: 1.1rem;
+}
+.top-bar .typicons-message {
+  display: inline-block;
+  padding: 4px 5px 2px 5px;
+}
+.top-bar .typicons-minus {
+  position: relative;
+  top: 3px;
+}
+.top-bar .left {
+  float: left;
+}
+.top-bar .right {
+  float: right;
+  padding-top: 5px;
+}
+.top-bar > * {
+  position: relative;
+}
+.top-bar::before {
+  content: "";
+  position: absolute;
+  top: -100%;
+  left: 0;
+  right: 0;
+  bottom: -100%;
+  opacity: 0.25;
+  background: radial-gradient(#ffffff, #000000);
+  animation: pulse 1s ease alternate infinite;
+}
+
+.discussion {
+  list-style: none;
+  background: #e5e5e5;
+  margin: 0;
+  padding: 0 0 50px 0;
+}
+.discussion li {
+  padding: 0.5rem;
+  overflow: hidden;
+  display: flex;
+}
+.discussion .avatar {
+  width: 50px;
+  height: 50px;
+  position: relative;
+}
+.discussion .avatar img {
+  display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.other .avatar:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid white;
+  border-left-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.self {
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.self .messages {
+  order: 1;
+  border-bottom-right-radius: 0;
+}
+.self .avatar {
+  order: 2;
+}
+.self .avatar:after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 0;
+  border: 5px solid white;
+  border-right-color: transparent;
+  border-top-color: transparent;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+.messages {
+  background: white;
+  padding: 10px;
+  border-radius: 2px;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+.messages p {
+  font-size: 0.8rem;
+  margin: 0 0 0.2rem 0;
+}
+.messages time {
+  font-size: 0.7rem;
+  color: #ccc;
+}
+
+@keyframes pulse {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.5;
+  }
+}              
 
 /********************************************************************************************************/
-/********************************************** OUTBOUNDED ***********************************************/
-/********************************************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/********************************************************************************************************/
-/********************************************** SELF ***********************************************/
+/*********************************************** SELF ***************************************************/
 /********************************************************************************************************/
 
 #login{
@@ -35,11 +204,70 @@
 	margin-top:20px;
 }
 
+/*logout animation*/
+@keyframes asd{
+    from{background-color: brown} 
+    to {background-color: cornsilk}
+}
+
+#body_disconnect{
+    animation:asd 1s infinite; 
+}
+
+
+
+.msgs:hover{
+	font-size:16px;
+}
+
+.card img{
+    width:300px;
+    height: 350px;
+
+}
+
+.grid_user_post{
+    padding:5px;
+    color:white;
+}
+#search{
+   height:65px; 
+
+}
+
+#profile_preferences{
+
+    background-color:whitesmoke;
+    border-radius: 25px;
+    padding: 10px;
+    
+}
+
+
+#users_to_chat{
+    height:540px;
+    overflow-y:scroll;
+    background-color: #444753;
+}
+
+#chat_plage{
+    border:1px solid #C1C1C1;
+    height:400px;
+    overflow-y:scroll;
+}
+
+#user_the_one_in_live_chat{
+    width: 100%;
+    background-color:#F2F5F8;
+    padding: 10px;
+}
+
+
+#thisisatest:hover{
+    
+  cursor:pointer;  
+}
 
 /********************************************************************************************************/
-/********************************************** SELF ***********************************************/
 /********************************************************************************************************/
-
-
-
-
+/********************************************************************************************************/
