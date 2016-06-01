@@ -1,3 +1,27 @@
+
+<?php
+session_start();
+
+
+require_once("system/module/Session.php");
+require_once("system/module/Connexion.php");
+$sess = new Session();
+
+if($sess->checkSession("iduser")==true)
+{
+
+  $idgrp=$sess->getSession("idgrp");
+  $iduser=$sess->getSession("iduser");
+
+  $con=new Connexion();
+
+  $sql1 = "call getuser(".$iduser.")";
+
+  $query1=$con->getPDO()->query($sql1)->fetch();
+
+
+?>
+
 <!DOCTYPE html>
 <!--[if gt IE 9]>
 <!-->
@@ -8,26 +32,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link href="http://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="assets/iconfont/material-icons.css" />
-    <link rel="stylesheet" href="assets/w3/w3.css" />
-    <link rel="stylesheet" href="assets/css/materialize.min.css" />
-    <link rel="stylesheet" href="assets/css/style.css" />
-    <link rel="icon" type="image/png" href="assets/img/logo-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="assets/img/logo-32x32.png" sizes="32x32" />
+    <link rel="stylesheet" href="/assets/iconfont/material-icons.css" />
+    <link rel="stylesheet" href="/assets/w3/w3.css" />
+    <link rel="stylesheet" href="/assets/css/materialize.min.css" />
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="icon" type="image/png" href="/assets/img/logo-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/assets/img/logo-32x32.png" sizes="32x32" />
     <title>TeamFoundation</title>
 
 </head>
-<body style='background-color:#ECECEC; overflow-x:hidden;'>
+<body style='background-color:#ECECEC; overflow-x:hidden;' >
 
 
     
     
     
-<!--////////////////////////////////////// FIN NAV BAR /////////////////////////////////////-->      
+
+<!--////////////////////////////////////// FIN NAV BAR /////////////////////////////////////-->   
+
+<audio id="notif_sng" controls autoplay><source src="/uploads/media/mp3/notif.mp3" type="audio/mp3"></audio>
+
+
+
+<div id="songplaceholder">
+
+
+
+
+</div>
+
+
+
 <div class="navbar-fixed">
   <nav id="nav_nav">
-    <div class="nav-wrapper" style="background-color:#1976D2;">
-      <a href="#!" class="brand-logo"  id="logo_txt">&nbsp;<img src="assets/img/cmpt_logo_small.png" style="width:200px;height:40px;" /></a>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo"  id="logo_txt">&nbsp;<img src="/assets/img/logos.png" style="width:50px;height:40px;" /></a>
       <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
           <li>
@@ -39,23 +78,37 @@
           <li>
               <a data-position="bottom" data-delay="50" data-tooltip="Messages"   href="#modal3" class='modal-trigger tooltipped' data-target="modal3">
                   <i class="material-icons">textsms</i>
+                  <span id="nbr_unread_msg_l" style="position:fixed;top:10;right:20;height:auto;margin-top:-40px;color:red;font-weight:bolder">
+   
+
+
+
+
+            
+
+
+
+
+
+                  </span>
               </a>
           </li>
 
           <li>
               <a data-position="bottom" data-delay="50" data-tooltip="Notifications"  href="#modal2" class='modal-trigger tooltipped' data-target="modal2" >
                   <i class="material-icons">add_alert</i>
+                  <span id="nbr_unread_notif_l" style="position:fixed;top:10;right:20;height:auto;margin-top:-40px;color:red;font-weight:bolder"></span>
               </a>
           </li>
 
           <li>
                <a href='#' data-position="bottom" data-delay="50" data-tooltip="Profile" class="tooltipped">
-                   <img class="responsive-img circle" style="width:30px;height:30px;margin-top:20px;" src="uploads/media/user1.jpg" />
+                   <img class="responsive-img circle" style="width:30px;height:30px;margin-top:20px;" src="/uploads/media/user1.jpg" />
                </a>
           </li>
 
           <li>
-              <a href="logout.php" data-position="bottom" data-delay="50" data-tooltip="Logout" class="tooltipped" >
+              <a href="logout" data-position="bottom" data-delay="50" data-tooltip="Logout" class="tooltipped" >
                   <i class="material-icons">lock</i>
               </a>
           </li>
@@ -73,25 +126,27 @@
               <span class="badge">Messages</span>
               <a href="#modal3" class='modal-trigger' data-target="modal3">
                   <i class="material-icons">textsms</i>
+                  <span id="nbr_unread_msg_m" style="position:fixed;top:10;right:20;height:auto;margin-top:-40px;color:red;font-weight:bolder"></span>
               </a>
           </li>
           <li>
               <span class="badge">Notifications</span>
               <a href="#modal2" class='modal-trigger' data-target="modal2" >
                   <i class="material-icons">add_alert</i>
+                  <span id="nbr_unread_notif_m" style="position:fixed;top:10;right:20;height:auto;margin-top:-40px;color:red;font-weight:bolder"></span>
               </a>
           </li>
 
            <li>
                <span class="badge">Arbib Soufiane</span>
                <a href='#' >
-                   <img class="responsive-img circle" style="width:30px;height:30px;margin-top:20px;" src="uploads/media/user1.jpg" />
+                   <img class="responsive-img circle" style="width:30px;height:30px;margin-top:20px;" src="/uploads/media/user1.jpg" />
                </a> 
           </li>
 
           <li>
               <span class="badge">Logout</span>
-              <a href="logout.php" >
+              <a href="http://teamfoundation.com/logout" >
                   <i class="material-icons">lock</i>
               </a>
           </li>
@@ -261,13 +316,13 @@
             <div class="col s12 m12 l12">
                 <div class="card hoverable">
                 <div class=" grid_user_post">
-                    <img src="uploads/media/user1.jpg" alt="avatar" class=" responsive-img circle" style="width:40px;height:40px;"/>
+                    <img src="/uploads/media/user1.jpg" alt="avatar" class=" responsive-img circle" style="width:40px;height:40px;"/>
                     <span><strong style="color:teal;margin-top:-15px">Arbib Soufiane</strong></span>
                     <span class="badge" style="font-size:12px;padding:14px;">2016/05/12 10:12:10</span>
                 </div>
                 <hr/>
                 <div class="card-image">
-                    <img src="uploads/media/post2.jpg" class="materialboxed waves-effect waves-light">
+                    <img src="/uploads/media/post2.jpg" class="materialboxed waves-effect waves-light">
                     <span class="card-title">Post Title</span>
                 </div>
                 <div class="card-content">
@@ -337,7 +392,7 @@
 
                 <ul class="collection">
                 <li class="collection-item avatar">
-                <img src="uploads/media/user1.jpg" alt="" class="circle">
+                <img src="/uploads/media/user1.jpg" alt="" class="circle">
                 <span class="title" style="color:teal">Arbib Soufiane</span>
                 <p> 
                 hhhhhhhhh :) 
@@ -354,7 +409,7 @@
                 <div class="col s12 m12 l12"> 
                     <div class="card hoverable">
                         <div class=" grid_user_post">
-                        <img src="uploads/media/user1.jpg" alt="avatar" class=" responsive-img circle" style="width:40px;height:40px;"/>
+                        <img src="/uploads/media/user1.jpg" alt="avatar" class=" responsive-img circle" style="width:40px;height:40px;"/>
                         <span><strong style="color:teal;margin-top:-15px">Arbib Soufiane</strong></span>
                         <span class="badge" style="font-size:12px;padding:14px;">2016/05/12 10:12:10</span>
                         </div>
@@ -399,7 +454,7 @@
                         <ul class="collection">
 
                         <li class="collection-item avatar">
-                        <img src="uploads/media/user1.jpg" alt="" class="circle">
+                        <img src="/uploads/media/user1.jpg" alt="" class="circle">
                         <span class="title" style="color:teal">Arbib Soufiane</span>
                         <p> 
                         hhhhhhhhh :) 
@@ -417,7 +472,7 @@
                 <div class="col s12 m12 l12">
         <div class="card hoverable">
         <div class=" grid_user_post">
-        <img src="uploads/media/user1.jpg" alt="avatar" class=" responsive-img circle" style="width:40px;height:40px;"/>
+        <img src="/uploads/media/user1.jpg" alt="avatar" class=" responsive-img circle" style="width:40px;height:40px;"/>
         <span><strong style="color:teal;margin-top:-15px">Arbib Soufiane</strong></span>
         <span class="badge" style="font-size:12px;padding:14px;">2016/05/12 10:12:10</span>
         </div>
@@ -474,7 +529,7 @@
         <ul class="collection">
 
         <li class="collection-item avatar">
-        <img src="uploads/media/user1.jpg" alt="" class="circle">
+        <img src="/uploads/media/user1.jpg" alt="" class="circle">
         <span class="title" style="color:teal">Arbib Soufiane</span>
         <p> 
         hhhhhhhhh :) 
@@ -537,7 +592,7 @@
     <div class="collapsible-body">
     <p>
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     Arbib Soufiane
     <span style="color:black">
 
@@ -561,28 +616,28 @@
     <div class="collapsible-body">
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     Arbib Soufiane
     <span class="badge">152 Rank</span>
     </a>
     <hr/>
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     Arbib Soufiane
     <span class="badge">150 Rank</span>
     </a>
     <hr/>
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     Arbib Soufiane
     <span class="badge">132 Rank</span>
     </a>
     <hr/>
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     Arbib Soufiane
     <span class="badge">100 Rank</span>
     </a>
@@ -600,7 +655,7 @@
     <p>
     <hr/>
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     <span style="color:black">
     <strong style="margin-top:-5px;">
     Arbib Soufiane: 
@@ -616,7 +671,7 @@
     <hr/>
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     <span style="color:black">
     <strong style="margin-top:-5px;">
     Arbib Soufiane: 
@@ -634,7 +689,7 @@
 
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     <span style="color:black">
     <strong style="margin-top:-5px;">
     Arbib Soufiane: 
@@ -650,7 +705,7 @@
     <hr/>
 
     <a href="#!" >
-    <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
+    <img src="/uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
     <span style="color:black">
     <strong style="margin-top:-5px;">
     Arbib Soufiane: 
@@ -686,217 +741,7 @@
 
 <div id="modal2" class="modal modal-fixed-footer" style="margin-right:-0px;">
     <div class="modal-content">
-
-
-        <a href="#!" >
-            <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            
-            <span style="color:black">
-                
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                
-                <span style="color:grey;font-size:15px;">
-                    sanfor hierd you
-                </span>    
-                <span style="color:blue;font-size:10px;">
-                    2016/08/12 21:01:26
-                </span>
-                
-            </span>
-            
-            <span class="new badge">
-                <a data-position="bottom" data-delay="50" data-tooltip="mark as read" class="tooltipped" href="login.php" >
-                    <i class="material-icons">done_all</i>
-                </a>
-            </span>
-            
-        </a>
-
-
-        <hr/>
-
-        
-        
-        
-        
-            <a href="#!" >
-            <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            
-            <span style="color:black">
-                
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                
-                <span style="color:grey;font-size:15px;">
-                    sanfor hierd you
-                </span>    
-                <span style="color:blue;font-size:10px;">
-                    2016/08/12 21:01:26
-                </span>
-                
-            </span>
-            
-            <span class="new badge">
-                <a data-position="bottom" data-delay="50" data-tooltip="mark as read" class="tooltipped" href="login.php" >
-                    <i class="material-icons">done_all</i>
-                </a>
-            </span>
-            
-        </a>
-
-
-        <hr/>
-        
-        
-        
-        
-        
-        
-        
-        
-               <a href="#!" >
-            <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            
-            <span style="color:black">
-                
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                
-                <span style="color:grey;font-size:15px;">
-                    sanfor hierd you
-                </span>    
-                <span style="color:blue;font-size:10px;">
-                    2016/08/12 21:01:26
-                </span>
-                
-            </span>
-            
-            <span class="new badge">
-                <a data-position="bottom" data-delay="50" data-tooltip="mark as read" class="tooltipped" href="login.php" >
-                    <i class="material-icons">done_all</i>
-                </a>
-            </span>
-            
-        </a>
-
-
-        <hr/>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-               <a href="#!" >
-            <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            
-            <span style="color:black">
-                
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                
-                <span style="color:grey;font-size:15px;">
-                    sanfor hierd you
-                </span>    
-                <span style="color:blue;font-size:10px;">
-                    2016/08/12 21:01:26
-                </span>
-                
-            </span>
-            
-            <span class="new badge">
-                <a data-position="bottom" data-delay="50" data-tooltip="mark as read" class="tooltipped" href="login.php" >
-                    <i class="material-icons">done_all</i>
-                </a>
-            </span>
-            
-        </a>
-
-
-        <hr/>
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-              <a href="#!" >
-            <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            
-            <span style="color:black">
-                
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                
-                <span style="color:grey;font-size:15px;">
-                    sanfor hierd you
-                </span>    
-                <span style="color:blue;font-size:10px;">
-                    2016/08/12 21:01:26
-                </span>
-                
-            </span>
-            
-            <span class="new badge">
-                <a data-position="bottom" data-delay="50" data-tooltip="mark as read" class="tooltipped" href="login.php" >
-                    <i class="material-icons">done_all</i>
-                </a>
-            </span>
-            
-        </a>
-
-
-        <hr/>  
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-
+        <div id="loaded_notifs_type_notif"></div>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
@@ -911,91 +756,7 @@
 
 <div id="modal3" class="modal modal-fixed-footer" style="margin-right:-0px;">
     <div class="modal-content ">
-
-
-        <a href="#!" class="msgs">
-        <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            <span style="color:black">
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                <span style="color:grey;font-size:15px;">aféén awdi hanya...</span>    <span style="color:blue;font-size:10px;">2016/08/12 21:01:26</span>
-            </span>
-            <span class="new badge"></span>
-        </a>
-        <hr/>
-
-
-
-        <a href="#!" class="msgs">
-        <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            <span style="color:black">
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                <span style="color:grey;font-size:15px;">aféén awdi hanya...</span>    <span style="color:blue;font-size:10px;">2016/08/12 21:01:26</span>
-            </span>
-            <span class="new badge"></span>
-        </a>
-        <hr/>
-
-
-        <a href="#!" class="msgs">
-        <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            <span style="color:black">
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                <span style="color:grey;font-size:15px;">aféén awdi hanya...</span>    <span style="color:blue;font-size:10px;">2016/08/12 21:01:26</span>
-            </span>
-            <span class="new badge"></span>
-        </a>
-        <hr/>
-
-
-        <a href="#!" class="msgs">
-        <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            <span style="color:black">
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                <span style="color:grey;font-size:15px;">aféén awdi hanya...</span>    <span style="color:blue;font-size:10px;">2016/08/12 21:01:26</span>
-            </span>
-            <span class="new badge"></span>
-        </a>
-        <hr/>
-
-
-
-
-
-        <a href="#!" class="msgs">
-        <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            <span style="color:black">
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                <span style="color:grey;font-size:15px;">aféén awdi hanya...</span>    <span style="color:blue;font-size:10px;">2016/08/12 21:01:26</span>
-            </span>
-            <span class="new badge"></span>
-        </a>
-        <hr/>
-
-
-
-        <a href="#!" class="msgs">
-        <img src="uploads/media/user1.jpg" alt="avatar" class="responsive-img circle" style="width:40px;height:40px;"/>
-            <span style="color:black">
-                <strong style="margin-top:-5px;">Arbib Soufiane </strong>
-                <span style="color:grey;font-size:15px;">aféén awdi hanya...</span>    <span style="color:blue;font-size:10px;">2016/08/12 21:01:26</span>
-            </span>
-            <span class="new badge"></span>
-        </a>
-        <hr/>
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
+        <div id="loaded_notifs_type_msg"></div>
     </div>
     <div class="modal-footer">
       <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat ">Close</a>
@@ -1028,7 +789,7 @@
             <div class="card-panel grey lighten-5 z-depth-1" style="padding:2px">
               <div class="row valign-wrapper">
                 <div class="col s2">
-                  <img src="uploads/media/user1.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
+                  <img src="/uploads/media/user1.jpg" alt="" class="circle responsive-img"> <!-- notice the "circle" class -->
                 </div>
                 <div class="col s10">
                   <span class="black-text" >
@@ -1064,7 +825,7 @@
           <div class="col s12 m12 l4">
               <div class="card">
                 <div class="card-image waves-effect waves-block waves-light">
-                  <img class="activator" src="uploads/media/office.jpg">
+                  <img class="activator" src="/uploads/media/office.jpg">
                 </div>
                 <div class="card-content">
                   <span class="card-title activator grey-text text-darken-4">Card Title<i class="material-icons right">more_vert</i></span>
@@ -1085,30 +846,42 @@
     </div>
   </div>
 
+
+
+<div id="cache_idgrp"><?php echo $query1['id_group']; ?></div>
+<div id="cache_iduser"><?php echo $query1['id_member']; ?></div>
+
 <!--///////////////////////////////////////////// SCRIPTS //////////////////////////////////////////////-->
 
-<script type="text/javascript" src="assets/js/jquery.min.js"></script><script type="text/javascript" src="assets/js/jquery.js"></script>
-
-<script type="text/javascript" src="assets/js/materialize.min.js"></script>
-<script type="text/javascript" src="assets/js/nicescroll.js"></script>
-<script type="text/javascript" src="assets/code-prettify/run_prettify.js"></script>
+<script type="text/javascript" src="/assets/js/jquery.min.js"></script>
 
 
+<script type="text/javascript" src="/assets/js/materialize.min.js"></script>
+<script type="text/javascript" src="/assets/js/nicescroll.js"></script>
+<script type="text/javascript" src="/assets/code-prettify/run_prettify.js"></script>
 
 
 
-<script type="text/javascript" charset="utf-8">
+
+
+<script >
 
   $(document).ready(function() {
+
+
+
+
+
+
+
+
+
 
     var fixmeTop1 = $('#fixed_aside').offset().top;         
     $(window).scroll(function() 
   { 
-        
         var currentScroll = $(window).scrollTop(); 
         var width_screen=$(window).width();
-        
-       
              if (currentScroll >= fixmeTop1) 
                 {     
                      if (width_screen>992)
@@ -1118,15 +891,12 @@
                             top: '0',
                             right: '0'
                         });
-                        
-
                     }
                     else    
                     {
                         $('#fixed_aside').css({                     
                             position: 'static'
                         });    
-
                     }
                 }
                 else
@@ -1134,15 +904,10 @@
                     $('#fixed_aside').css({                     
                         position: 'static'
                     });
-
                 }   
-        
-        
-
     });  
 
       
- 
     $("#comments_project").hide();
     $("#comments_toggel_project").click(function(){
        $("#comments_project").toggle(); 
@@ -1159,16 +924,12 @@
        $("#comments_qa").toggle(); 
     });
       
-      
-      
-      
-      
+       
     $(".button-collapse").sideNav();
     $(".dropdown-button").dropdown();
     $('select').material_select();
     $('.materialboxed').materialbox();
       
-
     $("body").niceScroll(
         {
             touchbehavior:false,
@@ -1203,6 +964,87 @@
       }
     );
 
+
+
+                   
+        
+
+/*//////////////////////////////////////AJAX MOTORS//////////////////////////////////////////////*/
+
+
+
+
+
+setInterval(function (){
+
+
+// load msg
+var idgrp=$("#cache_idgrp").text();
+var iduser=$("#cache_iduser").text();
+
+
+$.ajax({
+    type: 'POST',
+    url: '/system/actions/notif_agent/load_msg.php',
+    data: { 
+        'idgrp': idgrp,
+        'iduser': iduser
+    },
+    success: function(msg){
+      $("#loaded_notifs_type_msg").html(msg);
+    }
+});
+
+$.ajax({
+    type: 'POST',
+    url: '/system/actions/notif_agent/load_notifs.php',
+    data: { 
+        'idgrp': idgrp,
+        'iduser': iduser
+    },
+    success: function(msg){
+      $("#loaded_notifs_type_notif").html(msg);
+    }
+});
+/*
+alert(document.getElementById('nbr_unread_notif_m').innerText);
+alert($('#nbr_unread_notif_m').innerText);
+*/
+
+/*
+var times=0;
+var times1 = Number(document.getElementById('nbr_unread_msg_m').innerText)-1;
+var times2 = Number(document.getElementById('nbr_unread_notif_m').innerText)-1;
+
+times=times1+times2;
+
+if (times>0) 
+{
+
+
+
+}
+
+alert($('#nbr_unread_msg_m').text());
+*/
+
+
+
+
+
+}, 1000);
+
+
+
+
+
+
+
+
+ 
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////*/
+
   });
 </script>
 
@@ -1227,3 +1069,13 @@ function readURL(input) {
 
 </body>
 </html>
+
+<?php
+
+}
+else
+{
+  header("location:http://TeamFoundation.com/login");
+}
+
+?>

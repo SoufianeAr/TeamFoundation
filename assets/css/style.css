@@ -204,6 +204,12 @@ li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8{list-style-type:none}
 	margin-top:20px;
 }
 
+.nav-wrapper{
+background-color:#1976D2;
+}
+
+
+
 /*logout animation*/
 @keyframes asd{
     from{background-color: brown} 
